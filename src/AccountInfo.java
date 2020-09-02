@@ -1,18 +1,14 @@
-import java.util.Date;
-
 public abstract class AccountInfo {
     private String firstName;
     private String lastName;
     private String emailAddress;
     private long accountNo;
-    private Date dateOpened;
 
-    public AccountInfo(String firstName, String lastName, String emailAddress, long accountNo, Date dateOpened) {
+    public AccountInfo(String firstName, String lastName, String emailAddress, long accountNo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.accountNo = accountNo;
-        this.dateOpened = dateOpened;
     }
 
     public String getFirstName() {
@@ -47,11 +43,13 @@ public abstract class AccountInfo {
         this.accountNo = accountNo;
     }
 
-    public Date getDateOpened() {
-        return dateOpened;
-    }
-
-    public void setDateOpened(Date dateOpened) {
-        this.dateOpened = dateOpened;
+    @Override
+    public String toString() {
+        return "AccountInfo{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", accountNo=" + accountNo +
+                '}';
     }
 }
