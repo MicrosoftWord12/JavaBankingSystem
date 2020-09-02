@@ -35,7 +35,7 @@ public class CreateAccount{
         this.emailAddress = emailAddress;
     }
 
-    public long getBalance() {
+    public int getBalance() {
         return balance;
     }
 
