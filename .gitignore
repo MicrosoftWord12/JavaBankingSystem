@@ -1,3 +1,6 @@
+#Custom ignore
+src/accountsDB.txt
+
 # Compiled class file
 *.class
 
