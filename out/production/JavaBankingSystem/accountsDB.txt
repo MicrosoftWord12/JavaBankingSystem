@@ -1,4 +1,6 @@
 
-Email is: bob
-First Name is: bobb
-Last name is: bobo
+Email is: bob@k\jsrdig
+First Name is: ass
+Last name is: rain
+Balance is: 500
+

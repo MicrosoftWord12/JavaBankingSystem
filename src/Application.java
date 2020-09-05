@@ -11,14 +11,12 @@ public class Application {
 
     public Application() throws IOException {
     }
+    private boolean choice;
 
     public static void main(String[] args) throws IOException {
         Application app = new Application();
 //        CurrentAccount tomMumford = new CurrentAccount("Thomas", "Mumford", "thm37@aber.ac.uk", 123456789);
         app.run();
-
-        //add code to run
-//        System.out.println(tomMumford.toString());
     }
 
 
@@ -29,6 +27,7 @@ public class Application {
         System.out.println("Create Savings Account: Setup Savings Account");
         System.out.println("View Balance: view balance");
         System.out.println("Add Funds: add funds");
+        System.out.println("View account: view account");
 
         String account = input.nextLine();
         switch (account){
@@ -38,7 +37,7 @@ public class Application {
                 System.out.println("What is your email Address?");
                 createAccount.setEmailAddress(input.nextLine());
                 buffer.newLine();
-                buffer.write("Email is: " +createAccount.getEmailAddress());
+                buffer.write("Email is: " + createAccount.getEmailAddress());
 
                 System.out.println("What is your first name");
                 createAccount.setFirstName(input.nextLine());
@@ -69,9 +68,17 @@ public class Application {
                 break;
 
             case "view balance":
-                createAccount.getBalance();
+                System.out.println("You balance is: " + createAccount.getBalance());
+                break;
 
+            case "view account":
+                if (!createAccount.getEmailAddress().equals(createAccount.getEmailAddress()) && createAccount.getFirstName().equals(createAccount.getFirstName()) && createAccount.getLastName().equals(createAccount.getLastName())){
+                    System.out.println("Email: " + createAccount.getEmailAddress());
+                    System.out.println("First Name: " + createAccount.getFirstName());
+                    System.out.println("Last name" + createAccount.getLastName());
+                    System.out.println("Balance" + createAccount.getBalance());
 
+                }
         }
         }
 

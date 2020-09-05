@@ -1,4 +1,0 @@
-
-Email is: bob
-First Name is: bob
-Last name is: boooBalance is: 500
