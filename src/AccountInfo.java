@@ -1,8 +1,5 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.Scanner;
 
 public class AccountInfo {
     private String firstName;
@@ -10,8 +7,9 @@ public class AccountInfo {
     private String emailAddress;
     private long accountNo;
     private double balance;
+    private final String fileName = "accountsDB.txt";
 
-    public AccountInfo(String firstName, String lastName, String emailAddress, long accountNo) {
+    public AccountInfo(String firstName, String lastName, String emailAddress, int accountNo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
@@ -72,7 +70,6 @@ public class AccountInfo {
     }
 
     public void save() throws IOException {
-        String fileName = "accountsDB.txt";
         try (FileWriter fw = new FileWriter(fileName);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter outfile = new PrintWriter(bw)) {
@@ -80,6 +77,29 @@ public class AccountInfo {
             outfile.println(getFirstName());
             outfile.println(getLastName());
             outfile.println(getEmailAddress());
+            outfile.println(getBalance());
+            outfile.println(getAccountNo());
+            outfile.close();
+        }
+    }
+
+    public void load() throws IOException {
+        try (FileReader fr = new FileReader(fileName);
+             BufferedReader br = new BufferedReader(fr);
+             Scanner infile = new Scanner(br)) {
+
+            infile.useDelimiter("\r?\n|\r"); //End of line characters on Unix or DOS or others OSs
+
+            if (!infile.hasNext()) {
+                System.err.println("File is empty");
+            }
+            while (infile.hasNext()) {
+                setFirstName(infile.nextLine());
+                setLastName(infile.nextLine());
+                setEmailAddress(infile.nextLine());
+                setBalance(infile.nextDouble());
+                setAccountNo(infile.nextLong());
+            }
         }
     }
 }

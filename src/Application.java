@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Application {
@@ -24,12 +23,13 @@ public class Application {
         System.out.println("C: View Balance");
         System.out.println("D: Add Funds");
         System.out.println("E: View account");
-        System.out.println("F: Save account");
+        System.out.println("S: Save account");
+        System.out.println("L: Load account");
         System.out.println("Q: Close program");
     }
 
     public void run() throws IOException {
-        String choice = "";
+        String choice;
         do {
             PrintMenu();
             choice = input.next().toUpperCase();
@@ -41,6 +41,11 @@ public class Application {
 
                     System.out.println("Your balance is £0.00 until funds added");
                     createAcc.setBalance(0.00);
+
+                    long ranNum = (long)(Math.random() + 6 * 58 + 4);
+                    createAcc.setAccountNo(ranNum);
+                    System.out.println("Your account number is: " + createAcc.getAccountNo());
+
                     break;
                 case "B":
 
@@ -72,11 +77,16 @@ public class Application {
                     break;
 
                 case "E":
-
+                    System.out.println(createAcc.toString());
                     break;
 
-                case "F":
+                case "S":
                     createAcc.save();
+                    break;
+
+                case "L":
+                    createAcc.load();
+                    break;
                 case "Q":
 
                     break;

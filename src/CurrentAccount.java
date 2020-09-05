@@ -2,7 +2,7 @@ public class CurrentAccount extends AccountInfo {
     private float balance;
     private String makeAccount;
 
-    public CurrentAccount(String firstName, String lastName, String emailAddress, long accountNo) {
+    public CurrentAccount(String firstName, String lastName, String emailAddress, int accountNo) {
         super(firstName, lastName, emailAddress, accountNo);
     }
 
