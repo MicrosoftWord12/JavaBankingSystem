@@ -1,75 +1,76 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Application {
-    Scanner input = new Scanner(System.in);
-    FileWriter write = new FileWriter("D:\\JavaBankingSystem\\src\\accountsDB.txt");
-    BufferedWriter buffer = new BufferedWriter(write);
+    private CreateAccount createAcc;
+    private final Scanner input;
+    private final String firstName;
+    private final String lastName;
 
-    //    Custom Classes
-    CreateAccount createAccount = new CreateAccount();
 
-    public Application() throws IOException {
+    public Application() {
+        System.out.println("*** Welcome to your Online bank ***");
+        input = new Scanner(System.in);
+        System.out.println("What is your first name?");
+        firstName = input.next();
+        System.out.println("What is your last name?");
+        lastName = input.next();
+
+        createAcc = new CreateAccount(firstName, lastName);
     }
 
-    public static void main(String[] args) throws IOException {
-        Application app = new Application();
-//        CurrentAccount tomMumford = new CurrentAccount("Thomas", "Mumford", "thm37@aber.ac.uk", 123456789);
-        app.run();
-    }
 
-
-    public void run() throws IOException {
-        boolean repeatMenu = true;
-        while (repeatMenu) {
-
-        System.out.println("Welcome to your Online bank! \nChoose an option: ");
+    private void PrintMenu() {
+        System.out.println("\nChoose an option: ");
         System.out.println("A: Create Current Account: Setup Current Account");
         System.out.println("B: Create Savings Account: Setup Savings Account");
         System.out.println("C: View Balance: view balance");
         System.out.println("D: Add Funds: add funds");
         System.out.println("E: View account: view account");
         System.out.println("Q: Close program");
+    }
 
-            String account = input.nextLine().toUpperCase();
-            switch (account) {
+    public void run() throws IOException {
+        String choice = "";
+        do {
+            PrintMenu();
+            choice = input.next().toUpperCase();
+
+            switch (choice) {
                 case "A":
                     //do something
                     break;
                 case "B":
                     System.out.println("What is your email Address?");
-                    createAccount.setEmailAddress(input.nextLine());
-                    buffer.newLine();
-                    buffer.write("Email is: " + createAccount.getEmailAddress());
+                    createAccount.setEmailAddress(input.next());
+                    buffer.write(createAccount.getEmailAddress());
 
                     System.out.println("What is your first name");
-                    createAccount.setFirstName(input.nextLine());
+                    createAccount.setFirstName(input.next());
                     buffer.newLine();
-                    buffer.write("First Name is: " + createAccount.getFirstName());
+                    buffer.write(createAccount.getFirstName());
 
                     System.out.println("What is your last name");
-                    createAccount.setLastName(input.nextLine());
+                    createAccount.setLastName(input.next());
                     buffer.newLine();
-                    buffer.write("Last name is: " + createAccount.getLastName());
+                    buffer.write(createAccount.getLastName());
 
 
                     System.out.println("Would you like to add funds?");
-                    String choice = input.nextLine().toUpperCase();
-                    try {
-                        if (choice.equals("YES") || choice.endsWith("S") || choice.equals("Y")) {
-                            System.out.println("How much would you like to add?");
-                            createAccount.setBalance((int) input.nextFloat());
-                            //TODO: This doesnt save for some reason! I will work on a fix.
-                            buffer.newLine();
-                            buffer.write("Balance is: " + createAccount.getBalance());
-                            buffer.close();
-                            System.out.println("Account Created");
-                        } else {
-                            System.out.println("Have a good day");
-                            break;
-                        }
-                    } catch (IOException e) {
-                        System.err.println("error" + e);
+
+                    String answer = input.next().toUpperCase();
+
+                    if (answer.equals("YES") || answer.endsWith("S") || answer.equals("Y")) {
+                        System.out.println("How much would you like to add?");
+                        createAccount.setBalance(input.nextDouble());
+                        buffer.newLine();
+                        buffer.write(createAccount.getBalance());
+                        buffer.close();
+                        System.out.println("Account Created");
+                    } else {
+                        System.out.println("Have a good day");
+                        break;
                     }
                     break;
 
@@ -78,22 +79,24 @@ public class Application {
                     break;
 
                 case "D":
-                    if (!createAccount.getEmailAddress().equals(createAccount.getEmailAddress()) &&
-                            createAccount.getFirstName().equals(createAccount.getFirstName()) &&
-                            createAccount.getLastName().equals(createAccount.getLastName())) {
-                        System.out.println("Email: " + createAccount.getEmailAddress());
-                        System.out.println("First Name: " + createAccount.getFirstName());
-                        System.out.println("Last name" + createAccount.getLastName());
-                        System.out.println("Balance" + createAccount.getBalance());
-                        break;
-                    }
-                case "Q":
-                    repeatMenu = false;
+                    System.out.println(createAccount.getEmailAddress());
+                    System.out.println(createAccount.getFirstName());
+                    System.out.println(createAccount.getLastName());
+                    System.out.println(createAccount.getBalance());
                     break;
+                case "Q":
+                    break;
+
+                default:
+                    System.out.println("That is not a choice!");
             }
-        }
+        } while (!choice.equals("Q"));
     }
 
+    public static void main(String[] args) throws IOException {
+        Application app = new Application();
+        app.run();
+    }
 
 }
 

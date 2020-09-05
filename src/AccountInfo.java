@@ -1,3 +1,8 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 public abstract class AccountInfo {
     private String firstName;
     private String lastName;
@@ -51,5 +56,10 @@ public abstract class AccountInfo {
                 ", emailAddress='" + emailAddress + '\'' +
                 ", accountNo=" + accountNo +
                 '}';
+    }
+
+    public void save(String fileName) throws IOException {
+        PrintWriter outfile = new PrintWriter(new FileWriter(fileName));
+
     }
 }

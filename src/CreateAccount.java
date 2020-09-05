@@ -1,14 +1,18 @@
+import java.util.ArrayList;
+
 public class CreateAccount{
     private String firstName;
     private String lastName;
     private String emailAddress;
-    private int balance;
+    private double balance;
+    private String myName;
+    private ArrayList<AccountInfo> accountName;
 
-//    public void makeAccount(String firstName, String lastName, String emailAddress){
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.emailAddress = emailAddress;
-//    }
+    public CreateAccount(String firstName, String lastName) {
+       this.firstName = firstName;
+       this.lastName = lastName;
+        accountName = new ArrayList<>();
+    }
 
 
     public String getFirstName() {
@@ -35,11 +39,11 @@ public class CreateAccount{
         this.emailAddress = emailAddress;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
