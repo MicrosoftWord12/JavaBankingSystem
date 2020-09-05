@@ -1,6 +1,0 @@
-
-Email is: bob@k\jsrdig
-First Name is: ass
-Last name is: rain
-Balance is: 500
-
