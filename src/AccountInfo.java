@@ -1,13 +1,15 @@
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public abstract class AccountInfo {
+public class AccountInfo {
     private String firstName;
     private String lastName;
     private String emailAddress;
     private long accountNo;
+    private double balance;
 
     public AccountInfo(String firstName, String lastName, String emailAddress, long accountNo) {
         this.firstName = firstName;
@@ -16,8 +18,19 @@ public abstract class AccountInfo {
         this.accountNo = accountNo;
     }
 
+    public AccountInfo() {
+    }
+
     public String getFirstName() {
         return firstName;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public void setFirstName(String firstName) {
@@ -58,8 +71,15 @@ public abstract class AccountInfo {
                 '}';
     }
 
-    public void save(String fileName) throws IOException {
-        PrintWriter outfile = new PrintWriter(new FileWriter(fileName));
+    public void save() throws IOException {
+        String fileName = "accountsDB.txt";
+        try (FileWriter fw = new FileWriter(fileName);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter outfile = new PrintWriter(bw)) {
 
+            outfile.println(getFirstName());
+            outfile.println(getLastName());
+            outfile.println(getEmailAddress());
+        }
     }
 }

@@ -6,7 +6,7 @@ public class CurrentAccount extends AccountInfo {
         super(firstName, lastName, emailAddress, accountNo);
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
