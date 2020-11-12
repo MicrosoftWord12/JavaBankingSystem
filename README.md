@@ -1,7 +1,7 @@
 # JavaBankingSystem
 
 ## Author
-This is a banking system created by Jacob Brooks and Tom Mumford
+This is a banking system created by MicrosoftWord12 and iAppleTom
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
