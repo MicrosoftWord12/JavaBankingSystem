@@ -1,13 +1,19 @@
+import DBConnection.DBConnection;
+
 import java.io.*;
 import java.util.Scanner;
 
 public class AccountInfo {
+//    Classes
+    DBConnection db = new DBConnection();
+
     private String firstName;
     private String lastName;
     private String emailAddress;
     private long accountNo;
     private double balance;
     private final String fileName = "D:\\JavaBankingSystem\\accountsDB.txt";
+
 
     public AccountInfo(String firstName, String lastName, String emailAddress, int accountNo) {
         this.firstName = firstName;
@@ -33,6 +39,10 @@ public class AccountInfo {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+
+        String sql = "insert into customerinfo(first_name)" + "values(?)";
+
+
     }
 
     public String getLastName() {
