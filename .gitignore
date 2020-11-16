@@ -1,5 +1,7 @@
 #Custom ignore
 src/accountsDB.txt
+.vscode
+.idea
 
 # Compiled class file
 *.class

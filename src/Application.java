@@ -1,12 +1,22 @@
+import DBConnection.DBConnection;
+
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Application {
+
+//     Variables/Consts
     private final AccountInfo createAcc = new AccountInfo();
     private final Scanner input;
 
+//    Custom Classes
+    DBConnection db = new DBConnection();
 
-    public Application() {
+
+    public Application() throws SQLException {
+
+        db.dbConnection();
         System.out.println("*** Welcome to your Online bank ***");
         input = new Scanner(System.in);
         System.out.println("What is your first name?");
@@ -50,22 +60,6 @@ public class Application {
                 case "B":
 
 
-
-                    //System.out.println("Would you like to add funds?");
-
-                   //String answer = input.next().toUpperCase();
-
-//                    if (answer.equals("YES") || answer.endsWith("S") || answer.equals("Y")) {
-//                        System.out.println("How much would you like to add?");
-//                        createAccount.setBalance(input.nextDouble());
-//                        buffer.newLine();
-//                        buffer.write(createAccount.getBalance());
-//                        buffer.close();
-//                        System.out.println("Account Created");
-//                    } else {
-//                        System.out.println("Have a good day");
-//                        break;
-//                    }
                     break;
 
                 case "C":
@@ -98,7 +92,7 @@ public class Application {
         } while (!choice.equals("Q"));
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         Application app = new Application();
         app.run();
     }

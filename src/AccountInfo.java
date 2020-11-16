@@ -7,7 +7,6 @@ public class AccountInfo {
     private String emailAddress;
     private long accountNo;
     private double balance;
-//    private final String fileName = "accountsDB.txt";
     private final String fileName = "D:\\JavaBankingSystem\\accountsDB.txt";
 
     public AccountInfo(String firstName, String lastName, String emailAddress, int accountNo) {
