@@ -4,7 +4,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Application {
+public class Main {
 
 //     Variables/Consts
     private final AccountInfo createAcc = new AccountInfo();
@@ -14,8 +14,14 @@ public class Application {
     DBConnection db = new DBConnection();
 
 
-    public Application() throws SQLException {
+    public static void main(String[] args) throws IOException, SQLException {
+        Main app = new Main();
+        app.run();
+    }
 
+
+    public Main() throws SQLException {
+        createAcc.getFirstName();
         db.dbConnection();
         System.out.println("*** Welcome to your Online bank ***");
         input = new Scanner(System.in);
@@ -38,7 +44,7 @@ public class Application {
         System.out.println("Q: Close program");
     }
 
-    public void run() throws IOException {
+    public void run() throws IOException, SQLException {
         String choice;
         do {
             PrintMenu();
@@ -75,11 +81,11 @@ public class Application {
                     break;
 
                 case "S":
-                    createAcc.save();
+                    createAcc.save(createAcc.getFirstName(), createAcc.getLastName(), createAcc.getEmailAddress(), createAcc.getAccountNo(), createAcc.getBalance());
                     break;
 
                 case "L":
-                    createAcc.load();
+                    createAcc.load(createAcc.getFirstName(), createAcc.getLastName(), createAcc.getEmailAddress(), createAcc.getAccountNo(), createAcc.getBalance());
                     break;
 
                 case "Q":
@@ -92,10 +98,7 @@ public class Application {
         } while (!choice.equals("Q"));
     }
 
-    public static void main(String[] args) throws IOException, SQLException {
-        Application app = new Application();
-        app.run();
-    }
+
 
 }
 

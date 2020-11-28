@@ -4,40 +4,42 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class DBConnection {
+
     int port = 5432;
     final String User = "postgres";
     final String Password = "hAppyF45F@2";
+    String firstName;
     String name;
+
 
     Scanner input = new Scanner(System.in);
 
+    public String getFirstName() throws SQLException{
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
+        String sql = "select first_name where first_name ='" + firstName + "'";
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            String fName = rs.getString(1);
+            System.out.printf("%s", fName);
+        }
+        return firstName;
+    }
 
+    public void setFirstName(String firstName) throws SQLException {
+        this.firstName = firstName;
+
+        String sql = "insert into customerinfo(first_name)" + "values(?)";
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, firstName);
+        ps.execute();
+
+    }
 
     public void accountTest() throws SQLException{
         try(Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password)){
-            System.out.println("Connected");
-
-            System.out.println("What is your firstname");
-            String fname = input.nextLine();
-
-            System.out.println("What is your last name");
-            String lname = input.nextLine();
-
-            System.out.println("What is your email");
-            String email = input.nextLine();
-
-            //        Account num
-            long ranNum = (long)(Math.random() + 6 * 58 + 4);
-
-
-
-            String sql = "INSERT into customerinfo(first_name, last_name, email, account_number)" + "values(?,?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, fname);
-            ps.setString(2, lname);
-            ps.setString(3, email);
-            ps.setLong(4, 950);
-            ps.execute();
+            getFirstName();
         }
     }
 

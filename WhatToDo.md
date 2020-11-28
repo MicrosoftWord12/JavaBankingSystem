@@ -6,14 +6,16 @@
 - [x] Username = ? make sure it is correct
 
 #### Database
-- [ ] Connect to database
-- [ ] create the necesary tables
+- [x] Connect to database
+- [x] create the necesary tables
 - [ ] Run Commands to get data from DB to app
 
 ### Github
-- [ ] Make a new DB branch for me (MicrosoftWord12)  
+- [x] Make a new DB branch for me (MicrosoftWord12)  
 - [ ] Commit to that path > Change the already made README FILE
  
+### Implement Saving Loading Methods from DB to app
+- [ ] Fix getAll Method, Return String? double? long? int? NOT DOING IT
 
 ### What we have
 * Firstname
