@@ -1,8 +1,8 @@
 import DBConnection.DBConnection;
 
-import java.io.*;
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
-import java.util.Scanner;
+
 
 public class AccountInfo{
 //    Classes
@@ -14,7 +14,7 @@ public class AccountInfo{
     private String emailAddress;
     private long accountNo;
     private double balance;
-    private final String fileName = "D:\\JavaBankingSystem\\accountsDB.txt";
+    // private final String fileName = "D:\\JavaBankingSystem\\accountsDB.txt";
 //    DB stuff
     protected final String User = "postgres";
     protected final String Password = "hAppyF45F@2";
@@ -30,73 +30,36 @@ public class AccountInfo{
     public AccountInfo() {
     }
 
-    public String getFirstName() throws SQLException{
-//        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-//        String sql = "select first_name from customerinfo where first_name ='" + firstName + "'";
-//        Statement st = conn.createStatement();
-//        ResultSet rs = st.executeQuery(sql);
-//        while (rs.next()) {
-//            String fName = rs.getString("first_name");
-//            System.out.printf("%s", fName);
-//        }
+    public String getFirstName(){
         return firstName;
     }
 
-    public void setFirstName(String firstName) throws SQLException {
+    public void setFirstName(String firstName){
         this.firstName = firstName;
-
-//        String sql = "insert into customerinfo(first_name)" + "values(?)";
-//        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-//        PreparedStatement ps = conn.prepareStatement(sql);
-//        ps.setString(1, firstName);
-//        ps.execute();
-
-
-
     }
 
     public double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) throws SQLException{
+    public void setBalance(double balance){
         this.balance = balance;
-
-//        String sql = "insert into customerinfo(balance)" + "values(?)";
-//        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-//        PreparedStatement ps = conn.prepareStatement(sql);
-//        ps.setDouble(1, balance);
-//        ps.execute();
-
     }
 
-    public String getLastName() {
+    public String getLastName(){
         return lastName;
     }
 
-    public void setLastName(String lastName) throws SQLException {
+    public void setLastName(String lastName){
         this.lastName = lastName;
-
-//        String sql = "insert into customerinfo(last_name)" + "values(?)";
-//        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-//        PreparedStatement ps = conn.prepareStatement(sql);
-//        ps.setString(1, lastName);
-//        ps.execute();
-
     }
 
     public String getEmailAddress() {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) throws SQLException{
+    public void setEmailAddress(String emailAddress){
         this.emailAddress = emailAddress;
-
-        // String sql = "insert into customerinfo(email)" + "values(?)";
-        // Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-        // PreparedStatement ps = conn.prepareStatement(sql);
-        // ps.setString(1, lastName);
-        // ps.execute();
     }
 
     public long getAccountNo() {
@@ -105,12 +68,6 @@ public class AccountInfo{
 
     public void setAccountNo(long accountNo) throws SQLException{
         this.accountNo = accountNo;
-
-        // String sql = "insert into customerinfo(account_number)" + "values(?)";
-        // Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-        // PreparedStatement ps = conn.prepareStatement(sql);
-        // ps.setLong(1, accountNo);
-        // ps.execute();
     }
 
     @Override
@@ -123,35 +80,132 @@ public class AccountInfo{
                 '}';
     }
 
-    public void load(String firstName, String lastName, String email, long accountNO, double balance) throws SQLException{
+    public void load(String firstName, String lastName, String email, long accountNO) throws SQLException{
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-        String fNameSQL = "select first_name where first_name =''" + firstName + "'";
-        String lNameSQL = "select last_name where last_name ='" + lastName + "'";
-        String emailSQL = "select email where email = '" + email + "''";
-        String accountNOSQL = "select account_number where account_number = '" +  accountNo + "'";
-        String balanceSQL = "select balance where balance ='" + balance + "'";
+        String fNameSQL = "select first_name from customerinfo where first_name ='" + firstName + "'";
+        String lNameSQL = "select last_name from customerinfo where last_name ='" + lastName + "'";
+        String emailSQL = "select email from customerinfo where email = '" + email + "'";
+        String accountNoSQL = "select account_number from customerinfo where account_number = '" +  accountNO + "'";
+        String balanceSQL = "select balance from customerinfo where account_number =" + accountNO + "";
+
+        Statement fNameST = conn.createStatement();
+        ResultSet fNameRS = fNameST.executeQuery(fNameSQL);
+
+        Statement lNameST = conn.createStatement();
+        ResultSet lNameRS = lNameST.executeQuery(lNameSQL);
+
+        Statement emailST = conn.createStatement();
+        ResultSet emailRS = emailST.executeQuery(emailSQL);
+
+        Statement accountNoST = conn.createStatement();
+        ResultSet accountNoRS = accountNoST.executeQuery(accountNoSQL);
+
+        Statement balanceST = conn.createStatement();
+        ResultSet balanceRS = balanceST.executeQuery(balanceSQL);
+
+        if (fNameRS.isBeforeFirst()){
+            while(fNameRS.next() && lNameRS.next() && emailRS.next() && accountNoRS.next() && balanceRS.next()){
+                String fName = fNameRS.getString("first_name");
+                String lName = lNameRS.getString("last_name");
+                String emailAnswer = emailRS.getString("email");
+                long accountNumber = accountNoRS.getLong("account_number");
+                double balanceAnswer = balanceRS.getDouble("balance");
+                System.out.printf("First name = %s, Last Name = %s, Email = %s, Account Number = %s, Balance = £%s", fName, lName, emailAnswer, accountNumber, balanceAnswer);
+            }
+        }else{
+            System.err.println("Error has occured");
+            System.out.println("The inputs are not in the database");
+        }
+
     }
 
     public void save(String firstName, String lastName, String email, long accountNO, double balance) throws SQLException{
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-        String sql = "insert into customerinfo()" + "VALUES(?,?,?,?,?)";
+        String sql = "insert into customerinfo(first_name, last_name, email, account_number, balance)" + "VALUES(?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, firstName);
         ps.setString(2, lastName);
         ps.setString(3, email);
         ps.setLong(4, accountNO);
         ps.setDouble(5, balance);
+        ps.execute();
+    }
+
+    public void viewAccount(String email, long accountNo) throws SQLException{
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
+
+        String emailSQL = "select email from customerinfo where email = '" + email + "'";
+        String accountNoSQL = "select account_number from customerinfo where account_number = '" + accountNo + "'";
+        String balanceSQL = "select balance from customerinfo where account_number = '" + accountNo + "'";
+
+        Statement emailST = conn.createStatement();
+        ResultSet emailRS = emailST.executeQuery(emailSQL);
+
+        Statement accountNoST = conn.createStatement();
+        ResultSet accountNoRS = accountNoST.executeQuery(accountNoSQL);
+
+        Statement balanceST = conn.createStatement();
+        ResultSet balanceRS = balanceST.executeQuery(balanceSQL);
+
+        if (emailRS.isBeforeFirst()){
+            while (emailRS.next() && accountNoRS.next() && balanceRS.next()){
+                String emailAns = emailRS.getString("email");
+                long accountNoAns = accountNoRS.getLong("account_number");
+                double balanceAns = balanceRS.getDouble("balance");
+                System.out.printf("Email = %s, Account Number = %s, Balance = £%s", emailAns, accountNoAns, balanceAns);
+            }
+        }
 
     }
 
+    public void addFunds(long accountNumber, double balance) throws SQLException{
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
+
+        String accountNoSQL = "select account_number from customerinfo where account_number = '" + accountNumber + "'";
+        // String currentBal = "select balance from customerinfo where account_number = '" + accountNumber + "'";
 
 
-    public void getAll() throws SQLException {
-        getAccountNo();
-        getBalance();
-        getFirstName();
-        getLastName();
-        getEmailAddress();
+        Statement accountNoST = conn.createStatement();
+        ResultSet accountNoRS = accountNoST.executeQuery(accountNoSQL);
+
+        // Statement currentBalSQL = conn.createStatement();
+        // ResultSet currentBalRS = currentBalSQL.executeQuery(currentBal);
+
+        // while(currentBalRS.next()){
+        //     beforeBal = currentBalRS.getDouble("balance");
+        // }
+
+        if (accountNoRS.next()){
+            System.out.println("Working");
+            String addfunds = "update customerinfo set balance = balance + ? where account_number = ?";
+            PreparedStatement ps = conn.prepareStatement(addfunds);
+            ps.setDouble(1, balance);
+            ps.setLong(2, accountNumber);
+            ps.executeUpdate();
+        }else{
+            System.out.println("Probably not in database");
+        }
+    }
+
+    public void viewBalance(String email, long accountNo)throws SQLException{
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
+        String emailAdd = "select email from customerinfo where email = '" + email + "'";
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(emailAdd);
+
+        if (rs.next()){
+            String balanceSQL = "select balance from customerinfo where account_number = '" + accountNo + "'";
+            Statement balSQL = conn.createStatement();
+            ResultSet balRS = balSQL.executeQuery(balanceSQL);
+            while(balRS.next()){
+                double balance = balRS.getDouble("balance");
+                System.out.printf("Your Balance is: %s", balance);
+            }
+
+        }else{
+            System.out.println("Not in database");
+        }
     }
 
 //    public void save() throws IOException {

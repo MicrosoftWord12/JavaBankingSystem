@@ -22,25 +22,10 @@ public class DBConnection {
         while (rs.next()) {
             String fName = rs.getString(1);
             System.out.printf("%s", fName);
+            return fName;
+
         }
         return firstName;
-    }
-
-    public void setFirstName(String firstName) throws SQLException {
-        this.firstName = firstName;
-
-        String sql = "insert into customerinfo(first_name)" + "values(?)";
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password);
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, firstName);
-        ps.execute();
-
-    }
-
-    public void accountTest() throws SQLException{
-        try(Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/AccountInfo?serverTimezone=UTC", User, Password)){
-            getFirstName();
-        }
     }
 
     public void dbConnection() throws SQLException {
@@ -54,7 +39,6 @@ public class DBConnection {
 
     public static void main(String[] args) throws SQLException {
         DBConnection db = new DBConnection();
-        db.accountTest();
 
     }
 

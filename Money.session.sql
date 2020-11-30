@@ -1,1 +1,1 @@
-SELECT first_name from customerinfo;
+SELECT balance from customerinfo

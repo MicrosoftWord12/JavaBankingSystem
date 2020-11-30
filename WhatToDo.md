@@ -12,10 +12,16 @@
 
 ### Github
 - [x] Make a new DB branch for me (MicrosoftWord12)  
-- [ ] Commit to that path > Change the already made README FILE
+- [x] Commit to that path > Change the already made README FILE
  
 ### Implement Saving Loading Methods from DB to app
-- [ ] Fix getAll Method, Return String? double? long? int? NOT DOING IT
+- [ ] The loading methods are almost complete
+
+### Saving method
+- Ask for a AccountNO
+- Email?
+
+- Display Balance accountNO
 
 ### What we have
 * Firstname
